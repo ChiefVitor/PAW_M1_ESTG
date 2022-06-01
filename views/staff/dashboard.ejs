@@ -80,8 +80,8 @@
                                     <td><%= user.role %></td>
                                     <td><%= user.points %></td>
                                     <td>
-                                        <a href="/admin/edit/user/<%= user._id %>" class="btn btn-sm btn-info">Editar</a>
-                                        <form action="/admin/delete/user/<%= user._id  %>?_method=DELETE" class="d-inline" method="POST">
+                                        <a href="/staff/edit/user/<%= user._id %>" class="btn btn-sm btn-info">Editar</a>
+                                        <form action="/staff/delete/user/<%= user._id  %>?_method=DELETE" class="d-inline" method="POST">
                                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                         </form>
                                     </td>
@@ -151,7 +151,7 @@
                                         <%= order.type  %>
                                      </td>
                                     <td>
-                                        <form action="/admin/delete/order/<%= order._id  %>?_method=DELETE" class="d-inline" method="POST">
+                                        <form action="/staff/delete/order/<%= order._id  %>?_method=DELETE" class="d-inline" method="POST">
                                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                         </form>
                                     </td>

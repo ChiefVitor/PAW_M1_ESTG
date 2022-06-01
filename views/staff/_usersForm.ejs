@@ -6,17 +6,11 @@
     <label for="image">E-mail</label>
     <input required type="text" class="form-control" id="Email" name="email" value="<%= user.email  %>">
   </div>
-  <div class="form-group">
-      <label class="form-check-label" for="role">Função</label>
-      <select class="form-control" id="role" name="role" value="<%= user.role  %>">
-        <option value="Funcionario">Funcionario</option>
-        <option value="Cliente">Cliente</option>
-        </select>
-  </div>
+ 
   <div class="form-group">
     <label class="form-check-label" for="points">Pontos</label>
     <input required type="text" class="form-control" id="points" name="points" value="<%= user.points  %>">
 </div>
   <button type="submit" class="btn btn-success">Atualizar</button>
-  <a href="/admin" class="btn btn-success">Voltar</a>
+  <a href="/staff" class="btn btn-success">Voltar</a>
 

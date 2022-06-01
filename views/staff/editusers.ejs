@@ -12,7 +12,7 @@
         <div class="display-4 text-center">Editar <%= user.name  %> </div>
         <div class="container">
             <hr class="my-3">
-            <form method="POST" action="/admin/edit/user/<%= user._id  %>?_method=PUT">
+            <form method="POST" action="/staff/edit/user/<%= user._id  %>?_method=PUT">
                 <%- include ('./_usersForm.ejs') %> 
             </form>
         </div>

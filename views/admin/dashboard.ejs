@@ -30,6 +30,7 @@
                         <th scope="col">Capa</th>
                         <th scope="col">Titulo</th>
                         <th scope="col">Preco</th>
+                        <th scope="col">Stock</th>
                         <th scope="col">Ações</th>
                       </tr>
                     </thead>
@@ -39,6 +40,7 @@
                                     <td><img src="<%= book.image  %>" alt="Book Cover" class="img-thumbnail" style="height: 8rem; width: 8rem;"></td>
                                     <td class="lead text-primary"><%= book.title  %> </td>
                                     <td class="lead text-danger"><%= book.price  %> € </td>
+                                    <td class="lead text-danger"><%= book.stock  %>  </td>
                                     <td>
                                         <a href="/books/edit/<%= book._id %>" class="btn btn-sm btn-info">Editar</a>
                                         <form action="/books/delete/<%= book._id  %>?_method=DELETE" class="d-inline" method="POST">
