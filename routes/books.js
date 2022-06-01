@@ -52,7 +52,9 @@ router.put('/edit/:id', VerificarAutorizacao ,async (req, res)=>{
         title: req.body.title,
         image: req.body.image,
         description: req.body.description,
-        price:  parseFloat(req.body.price)
+        price:  parseFloat(req.body.price),
+        stock: req.body.stock,
+        category: req.body.category
     };
     try{
         const updatedBook = await Book.findByIdAndUpdate(req.params.id, book);
