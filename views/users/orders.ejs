@@ -1,0 +1,67 @@
+<%- include ('../partials/_header.ejs') %>
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 lead">
+        
+        Loja PAW</span>
+    <span>
+        <a href="/users/dashboard" class="btn btn-sm btn-info">Voltar a Dashboard</a>  
+    </span>
+  </nav>
+  <%- include ('../partials/_msg.ejs')  %>
+  <div class="container mt-3">
+    
+        <div class="jumbotron p-3">
+            <div class="d-flex justify-content-around" style="font-size: 25px; color: darkblue;">
+                <span>Pedidos </span> 
+            </div>
+            <hr class="my-3">
+            <div class="container mt-2">
+                <table class="table table-bordered bg-light table-responsive-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Detalhes</th>
+                        <th scope="col">Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% orders.forEach(order=>{ %>
+                                <tr>
+                                    <td><%= order._id  %> </td>
+                                    <td class="text-danger"><%= order.amount  %> €</td>
+                                    <td>
+                                        <table class="table table-bordered bg-light table-responsive-sm">
+                                            <thead>
+                                              <tr>
+                                                <th scope="col">Titulo</th>
+                                                <th scope="col">Preco</th>
+                                                <th scope="col">Quantidade</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% order.details.forEach(cartItem=>{ %>
+                                                        <tr>
+                                                            <td><%= cartItem.book.title  %> </td>
+                                                            <td class="text-danger"><%= cartItem.book.price  %> € </td>
+                                                            <td>
+                                                                <%= cartItem.quantity %> 
+                                                            </td>
+                                                        </tr>
+                                                <% }) %>
+                                            </tbody>
+                                          </table>
+                                    </td>
+                                    <td>
+                                       <%= order.createdAt  %>
+                                    </td>
+                                </tr>
+                        <% }) %>
+                    </tbody>
+                  </table>
+            </div>
+            <hr class="my-3">
+        </div>
+  </div>
+
+        <%- include ('../partials/_footer.ejs') %>

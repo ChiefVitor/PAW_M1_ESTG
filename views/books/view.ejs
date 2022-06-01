@@ -1,0 +1,34 @@
+<%- include ('../partials/_footer.ejs')  %>
+
+    <div class="container mt-2">
+        <div class="jumbotron position-relative">
+            <div class="row">
+                <a href="/books" class="view-back-btn btn btn-success position-absolute"> Voltar a Loja</a>
+                <div class="col-md-4 d-flex flex-column align-items-center justify-content-center">
+                    <img style="width: 18rem;" src="<%= book.image %> " alt="" class="view-img-book img-responsive">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="display-4 text-success text-center"><%= book.title %></h1>
+                    <hr class="my-2">
+                    <p><%= book.description %></p>
+                    <h3 class="lead text-danger">Price: <%= book.price %> €</h3>
+                    <hr class="mb-2">
+                    <% if(typeof user !== 'undefined' && user.role === 'admin'){ %> 
+                        <a href="/books/edit/<%= book._id %>" class="btn btn-primary">Edit Details</a>
+                        <form action="/books/delete/<%= book._id  %>?_method=DELETE" class="d-inline" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete Book</button>
+                        </form>
+                    <% }else if(typeof user === 'undefined' || typeof user !== 'undefined' && user.carts.findIndex(item=> item.book.equals(book._id))===-1){ %> 
+                    <form action="/users/cart/<%= book._id  %>?_method=PUT" class="d-inline" method="POST">
+                        <button type="submit" class="btn btn-warning">Adicionar ao Carrinho</button>
+                    </form>
+                <% }else{ %>
+                    <p class="lead text-secondary">Livro no carrinho <a href="/users/dashboard" class="btn btn-primary d-inline">Go to Cart</a></p>
+                <% } %>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<%- include ('../partials/_header.ejs')  %> 
