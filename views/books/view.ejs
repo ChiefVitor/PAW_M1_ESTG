@@ -14,9 +14,9 @@
                     <h3 class="lead text-danger">Price: <%= book.price %> €</h3>
                     <hr class="mb-2">
                     <% if(typeof user !== 'undefined' && user.role === 'admin'){ %> 
-                        <a href="/books/edit/<%= book._id %>" class="btn btn-primary">Edit Details</a>
+                        <a href="/books/edit/<%= book._id %>" class="btn btn-primary">Editar</a>
                         <form action="/books/delete/<%= book._id  %>?_method=DELETE" class="d-inline" method="POST">
-                            <button type="submit" class="btn btn-danger">Delete Book</button>
+                            <button type="submit" class="btn btn-danger">Eliminar Livro</button>
                         </form>
                     <% }else if(typeof user === 'undefined' || typeof user !== 'undefined' && user.carts.findIndex(item=> item.book.equals(book._id))===-1 )  { %> 
                       <% if(book.stock > 0 ){ %>
@@ -27,7 +27,7 @@
                             <% } %>
                     </form>
                 <% }else{ %>
-                    <p class="lead text-secondary">Livro no carrinho <a href="/users/dashboard" class="btn btn-primary d-inline">Go to Cart</a></p>
+                    <p class="lead text-secondary">Livro no carrinho <a href="/users/dashboard" class="btn btn-primary d-inline">Ir para carrinho</a></p>
                 <% } %>  
                 </div>
             </div>

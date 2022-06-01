@@ -9,7 +9,8 @@
   <div class="form-group">
       <label class="form-check-label" for="role">Função</label>
       <select class="form-control" id="role" name="role" value="<%= user.role  %>">
-        <option value="staff">Funcionario</option>
+        <option selected disabled hidden><%= user.role %></option>
+        <option value="staff">Staff</option>
         <option value="customer">Cliente</option>
         </select>
   </div>
