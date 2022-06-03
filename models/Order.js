@@ -1,34 +1,40 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const orderSchema = mongoose.Schema({
-    user:{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    createdAt:{
+    createdAt: {
         type: String,
         required: true,
         default: moment().format("Do MMM YYYY")
     },
-    details:[{
-        book:{
+    details: [{
+        book: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Book",
         },
-        quantity:{
+        quantity: {
             type: Number,
             required: true
         }
     }],
-    amount:{
+    amount: {
         type: Number,
         required: true
     },
-    type:{
+    type: {
         type: String,
         required: true,
-        default: 'Online'
+        default: "Online"
     },
+
+    
+
+
+
+
 });
 
 module.exports = mongoose.model("Order", orderSchema);

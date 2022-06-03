@@ -13,6 +13,7 @@
 		<a href="/users/dashboard" class="btn btn-sm btn-info">Cancel</a>
 	</span>
 </nav>
+
 <div class="container mt-3">
 	<div class="jumbotron p-3">
 		<div class="d-flex justify-content-around" style="font-size: 25px; color: darkblue">
@@ -47,16 +48,21 @@
 					</tr>
 					<% }) %>
 					<tr class="lead font-weight-bold text-primary">
-						<td colspan="3">Grand Total</td>
+						<td colspan="3">Preço Total</td>
 						<td colspan="2">€<%= total %></td>
 					</tr>
+
+					
 				</tbody>
+				
 			</table>
+			 
+			
 		</div>
 		<hr class="my-3" />
 		<div class="row">
 			<form action="/users/order" method="POST" class="mx-auto">
-				<button type="submit" class="btn btn-sm btn-primary">Finish Order</button>
+				<button type="submit" class="btn btn-sm btn-primary">Finalizar Ordem</button>
 			</form>
 		</div>
 	</div>

@@ -63,7 +63,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Set Quantity of products</h5>
+          <h5 class="modal-title" id="exampleModalCenterTitle">Definir Quantidade de livros</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -74,21 +74,22 @@
                 <table class="table table-bordered bg-light table-responsive-sm">
                     <thead>
                       <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">Quantidade</th>
                       </tr>
+                      
                     </thead>
                     <tbody>
                         <% user.carts.forEach(cartItem=>{ %>
                                 <tr>
                                     <td class="lead text-primary"><%= cartItem.book.title  %> </td>
-                                    <td class="lead text-danger">€<%= cartItem.book.price  %> </td>
+                                    <td class="lead text-danger"><%= cartItem.book.price  %> €</td>
                                     <td>
                                         <select
                                             name="<%= cartItem.book._id %>"
-                                            class="form-control">
-                                            <% for(let i=1;i<=10;i++){ %>
+                                            class="form-control"> 
+                                            <% for(let i= 1; i <= 10 ; i++){ %>
                                                 <% if(cartItem.quantity === i){ %>
                                                     <option selected><%= i %></option>
                                                 <% }else{ %>
@@ -98,14 +99,19 @@
                                         </select>
                                     </td>
                                 </tr>
+                                
                         <% }) %> 
                     </tbody>
+                    
                   </table>
+                  
+                   
+                   
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Go To Checkout</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar Compra</button>
         </div>
         </form>
       </div>

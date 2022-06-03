@@ -103,7 +103,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">ID</th>
                         <th scope="col">Função</th>
-                        <th scope="col">Pontos</th>
+                       
                         <th scope="col">Ações</th>
                       </tr>
                     </thead>
@@ -115,7 +115,7 @@
                                     <td><%= user.email  %> </td>
                                     <td><%= user._id  %> </td>
                                     <td><%= user.role %></td>
-                                    <td><%= user.points %></td>
+                                   
                                     <td>
                                         <a href="/admin/edit/user/<%= user._id %>" class="btn btn-sm btn-info">Editar</a>
                                         <form action="/admin/delete/user/<%= user._id  %>?_method=DELETE" class="d-inline" method="POST">
@@ -130,8 +130,13 @@
             </div>
         </div>
         <div class="jumbotron p-3">
-            <div class="d-flex justify-content-center" style="font-size: 25px; color: darkblue;">
+            <div class="d-flex justify-content-center" style="font-size: 25px; color: darkblue; ">
                Detalhes das Ordens
+               <div style="display:flex; justify-content:flex-end; width:50%; padding:0;">
+                
+                <a href="/users/login" class="btn btn-sm btn-success">Adicionar</a>
+            </div>
+            
             </div>
             <div class="container mt-2" style="overflow-x: scroll;">
                 <table class="table table-bordered bg-light table-responsive-sm">
