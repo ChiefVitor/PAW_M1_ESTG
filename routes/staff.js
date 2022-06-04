@@ -47,4 +47,9 @@ router.delete('/delete/order/:id', VerificarAutorizacao, async (req, res) => {
     res.redirect('/staff');
 });
 
+router.post('/changestatus/order/:id', VerificarAutorizacao, async (req, res) => {
+    await Order.findByIdAndUpdate(req.params.id, { status: "finished" });
+    res.redirect('/admin');
+});
+
 module.exports = router;

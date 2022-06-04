@@ -94,11 +94,12 @@
         </div>
 
         <div class="jumbotron p-3">
-            <div class="d-flex justify-content-center" style="font-size: 25px; color: darkblue;">
+            <div class="d-flex justify-content-center" style="font-size: 25px; color: darkblue; ">
                Detalhes das Compras
+
             </div>
             <div class="container mt-2" style="overflow-x: scroll;">
-                <table class="table table-bordered bg-light table-responsive-sm">
+                <table class="table table-bordered bg-light table-sm">
                     <thead>
                       <tr>
                         <th scope="col">id</th>
@@ -107,6 +108,9 @@
                         <th scope="col">Data</th>
                         <th scope="col">Utilizador</th>
                         <th scope="col">Tipo</th>
+                        <th scope="col">Shipping Method</th>
+                        <th scope="col">Shipping Price</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Ações</th>
                       </tr>
                     </thead>
@@ -150,7 +154,22 @@
                                     <td>
                                         <%= order.type  %>
                                      </td>
+                                     <td>
+                                        <%= order.shippingmethod  %>
+                                     </td>
+                                     <td>
+                                        <%= order.shippingprice %>
+                                     </td>
+                                     <td>
+                                        <%= order.status  %>
+                                     </td>
                                     <td>
+                                        <% if (order.status === "pending") { %>
+                                            <form action="/staff/changestatus/order/<%= order._id  %>" class="d-inline" method="POST">
+                                                <button type="submit" class="btn btn-sm btn-success">Finalizar</button>
+                                            </form>
+                                            <p></p>
+                                            <% } %>
                                         <form action="/staff/delete/order/<%= order._id  %>?_method=DELETE" class="d-inline" method="POST">
                                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                                         </form>

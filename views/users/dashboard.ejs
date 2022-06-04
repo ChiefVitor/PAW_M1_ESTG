@@ -124,13 +124,21 @@
                     </tbody>
 
                   </table>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1" value="free" checked>
-                    <label class="form-check-label" for="exampleRadios1">
-                      Expedição Gratis - Usar 5 Pontos
-                    </label>
-                  </div>
+                  <% if (user.points >= 5) { %>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1" value="free" checked>
+                      <label class="form-check-label" for="exampleRadios1">
+                        Expedição Gratis - Usar 5 Pontos
+                      </label>
+                    </div>
+                    <%} else { %>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1" value="free" disabled>
+                        <label class="form-check-label" for="exampleRadios1">
+                          Expedição Gratis - Usar 5 Pontos
+                        </label>
+                      </div>
+                    <% } %>
                   <div class="form-check">
                     <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios2" value="paid">
                     <label class="form-check-label" for="exampleRadios2">
