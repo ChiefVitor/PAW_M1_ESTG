@@ -29,11 +29,20 @@ const orderSchema = mongoose.Schema({
         required: true,
         default: "Online"
     },
-
-    
-
-
-
+    shippingmethod:{
+        type: String,
+        required: true
+    },
+    shippingprice:{
+        type: Number,
+        default: 0,
+        required: true
+    },
+    status:{
+        type: String,
+        default: "pending",
+        required: true
+    },
 
 });
 

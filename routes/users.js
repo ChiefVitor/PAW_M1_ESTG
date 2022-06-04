@@ -93,7 +93,7 @@ router.post(
 		failureFlash: true,
 		failureRedirect: '/users/login',
 	}),
-	(req, res) => {}
+	(req, res) => { }
 );
 
 router.get('/logout', (req, res) => {
@@ -163,11 +163,34 @@ router.get('/dashboard', VerificarAutenticacao, (req, res) => {
 });
 
 router.post('/checkout', VerificarAutenticacao, async (req, res) => {
+
 	try {
-		const oldUser = req.user;
+		let oldUser = req.user;
+
+		oldUser.carts[oldUser.carts.length - 1].shippingmethod = req.body.shippingmethod;
+		oldUser.carts[oldUser.carts.length - 1].shippingprice = 0;
+
+		if (oldUser.carts[oldUser.carts.length - 1].shippingmethod === 'free') {
+			if (oldUser.points < 5) {
+				return res.redirect('back');
+			}
+		}
+
+		if (oldUser.carts[oldUser.carts.length - 1].shippingmethod === 'paid') {
+			oldUser.carts[oldUser.carts.length - 1].shippingprice = 5;
+		}
+
+
 		oldUser.carts.forEach((cartItem) => {
 			cartItem.quantity = req.body[cartItem.book];
+			if (cartItem.quantity > cartItem.book.stock) {
+				return res.redirect('back');
+			}
 		});
+
+		shippingprice = oldUser.carts[oldUser.carts.length - 1].shippingprice;
+		shippingmethod = oldUser.carts[oldUser.carts.length - 1].shippingmethod;
+
 		await User.findByIdAndUpdate(oldUser.id, oldUser);
 
 		User.findById(oldUser.id)
@@ -180,7 +203,8 @@ router.post('/checkout', VerificarAutenticacao, async (req, res) => {
 					user.carts.forEach((cartItem) => {
 						total += cartItem.quantity * cartItem.book.price;
 					});
-					res.render('users/checkout', { user, total });
+					total += shippingprice;
+					res.render('users/checkout', { user, total, shippingprice });
 				}
 			});
 	} catch (e) {
@@ -198,20 +222,58 @@ router.post('/order', VerificarAutenticacao, async (req, res) => {
 				res.redirect('/books');
 			} else {
 				let total = 0;
+				let shippingprice = 0;
+				let shippingmethod = "";
 				user.carts.forEach((cartItem) => {
+					Book.findOneAndUpdate({_id: cartItem.book.id}, { $inc: { stock: -cartItem.quantity } }, {new: true}, (err, doc) => {
+						if (err) {
+							console.log("Erro a remover stock de determinado livro.");
+						}
+					
+						
+						console.log(doc);
+					});
 					total += cartItem.quantity * cartItem.book.price;
 				});
+
+
+
+				shippingprice = user.carts[user.carts.length - 1].shippingprice
+				shippingmethod = user.carts[user.carts.length - 1].shippingmethod
+
+				total += shippingprice;
+
+				let orderstatus = "";
+				let ordertype = "";
+
+				if (shippingmethod === 'pickup') {
+					orderstatus = 'pending',
+						ordertype = 'store'
+				} else {
+					orderstatus = 'finished',
+						ordertype = 'online'
+				}
+
 				try {
 					const order = new Order({
 						user,
 						details: user.carts,
 						amount: total,
+						shippingmethod: shippingmethod,
+						shippingprice: shippingprice,
+						status: orderstatus,
+						type: ordertype,
 					});
 					await order.save();
 					let updatedUser = req.user;
 					updatedUser.carts = [];
 					await User.findByIdAndUpdate(updatedUser.id, updatedUser);
-					await User.findByIdAndUpdate(updatedUser.id, {$inc: {points: 3}});
+					if (shippingmethod === 'paid') {
+						await User.findByIdAndUpdate(updatedUser.id, { $inc: { points: 5 } });
+					}
+					if (shippingmethod === 'free') {
+						await User.findByIdAndUpdate(updatedUser.id, { $inc: { points: -5 } });
+					}
 					req.flash('sucesso', 'O seu pedido foi feito com sucesso.');
 					res.redirect('/users/orders');
 				} catch (e) {

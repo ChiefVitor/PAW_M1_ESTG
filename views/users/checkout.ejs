@@ -46,18 +46,22 @@
 						<td><%= cartItem.quantity %></td>
 						<td class="text-danger">€<%= cartItem.quantity * cartItem.book.price %></td>
 					</tr>
+				</tr>
 					<% }) %>
 					<tr class="lead font-weight-bold text-primary">
-						<td colspan="3">Preço Total</td>
-						<td colspan="2">€<%= total %></td>
-					</tr>
+						<td colspan="4">Shipping Price</td>
+						<td colspan="3">€<%= shippingprice %></td>
+					  </tr>
+					<tr class="lead font-weight-bold text-primary">
+						<td colspan="4">Preço Total</td>
+						<td colspan="3">€<%= total %></td>
 
-					
+					</tr>
+	
 				</tbody>
 				
 			</table>
-			 
-			
+
 		</div>
 		<hr class="my-3" />
 		<div class="row">

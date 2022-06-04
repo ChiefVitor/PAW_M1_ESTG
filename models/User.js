@@ -30,7 +30,16 @@ const userSchema = mongoose.Schema({
             type: Number,
             required: true,
             default: 1
-        }
+        },
+        shippingmethod:{
+            type: String,
+            required: true
+        },
+        shippingprice:{
+            type: Number,
+            default: 0,
+            required: true
+        },
     }]
 });
 
