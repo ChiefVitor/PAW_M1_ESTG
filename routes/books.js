@@ -9,8 +9,10 @@ router.get('/',  async(req, res) => {
     res.render('books/home', {books: books, user: req.user});
 });
 
+
+
 router.get('/view/:id', (req, res)=>{
-    Book.findById(req.params.id).exec((err, book)=>{
+    Book.findById(req.params.id).populate('comments').exec((err, book)=>{
         if(err){
             console.log(err);
             res.redirect('/books');

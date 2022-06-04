@@ -16,6 +16,7 @@ const bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+
     stock:{
         type: Number,
         required:true
@@ -24,6 +25,13 @@ const bookSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+
+    comments:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
 
 module.exports = mongoose.model("Book", bookSchema);

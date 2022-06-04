@@ -40,6 +40,7 @@ app.use('/books', require('./routes/books'));
 app.use('/users', require('./routes/users'));
 app.use('/admin', require('./routes/admin'));
 app.use('/staff', require('./routes/staff'));
+app.use('/books/:id/comments', require('./routes/comments'));
 
 const PORT = process.env.PORT;
 const IP = process.env.IP;
