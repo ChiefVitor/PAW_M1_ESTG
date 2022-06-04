@@ -64,9 +64,25 @@
 
 		</div>
 		<hr class="my-3" />
+		
+		<!-- BOTÃO PARA IMPLEMENTAR A API DO STRIPE-->
 		<div class="row">
 			<form action="/users/order" method="POST" class="mx-auto">
-				<button type="submit" class="btn btn-sm btn-primary">Finalizar Ordem</button>
+				<script
+				src="https://checkout.stripe.com/checkout.js"
+				class="stripe-button"
+				data-key="pk_test_51L707yGlHGAzhcu2TVrH3O4L649XGS5WezjEx7FRDBZQo78KaJ1KolHg8GPGlXsl1Y3XVjWfXXa0GAZANuPFfm6m00Cz92AFlv" 
+				data-name="PAW Loja"
+				data-image="/img/livros.jpg"
+				data-locale="auto">
+			</script>
+			<!-- ESCONDER BOTÃO E ALTERAR PARA OUTRO FORMATO-->
+			<script>
+				document.getElementsByClassName('stripe-button-el')[0]
+				.style.display = 'none';
+			</script>
+			<button type="submit" class="btn btn-outline-dark text-white
+			btn-lg">Checkout <%= total %> € </button>
 			</form>
 		</div>
 	</div>
