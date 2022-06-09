@@ -1,0 +1,9 @@
+backoffice - é a aplicação do lado da empresa
+
+frontoffice- é o que e publico para as pessoas , visivelmente utilizado para os utilizadores.
+
+backend - servidor
+
+frontend- browser
+
+framework utilizado em backend - Exmpress ,  frontend - angular

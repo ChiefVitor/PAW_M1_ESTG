@@ -34,7 +34,7 @@
         </div>
         <div class="jumbotron p-3">
             <div class="d-flex justify-content-end">
-                <a href="/books/<%= book._id  %>/comments/new" class="btn btn-secondary">Add a Comment</a>
+                <a href="/books/<%= book._id  %>/comments/new" class="btn btn-secondary">Adicionar Comentario</a>
             </div>
             <div class="container mt-2">
                 <ul class="list-group">
@@ -45,9 +45,9 @@
                             <p><%= comment.content  %> </p>
                             <p class="text-secondary"><%= comment.createdAt.toLocaleDateString()  %> <%= comment.createdAt.toLocaleTimeString()  %></p>
                             <% if(typeof user !== 'undefined' && comment.author.id.equals(user._id)){ %> 
-                                <a href="/books/<%= book._id  %>/comments/<%= comment._id %>/edit" class="btn btn-warning">Edit Comment</a>
+                                <a href="/books/<%= book._id  %>/comments/<%= comment._id %>/edit" class="btn btn-warning">Editar Comentario</a>
                                 <form action="/books/<%= book._id %>/comments/<%= comment._id %>/delete?_method=DELETE" class="d-inline" method="POST">
-                                    <button type="submit" class="btn btn-danger">Delete Comment</button>
+                                    <button type="submit" class="btn btn-danger">Eliminar Comentario</button>
                                 </form>
                             <% } %> 
                         </li>

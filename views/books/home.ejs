@@ -1,6 +1,9 @@
 <%- include ('../partials/_header.ejs') %>
   <nav class="navbar navbar-light bg-light">
     <span class="navbar-brand mb-0 lead">
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> 
+      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+      <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 
       Loja PAW
     </span>
@@ -27,26 +30,43 @@
         <h1 class="display-4 ml-2">Loja PAW</h1>
         <p class="lead ml-2">A Sua Loja Online e Fisica Favorita</p>
       </div>
-      <br>
-      <div class="container mb-4 home-books">
-       
-          <% books.forEach(book=> { %>
-            <div class="card" style="width: 18rem; position: relative;">
-              <img style="height: 15rem;" src="<%= book.image  %> " class="card-img-top" alt="...">
-              <div class="card-body" style="background-color:#efe3d4">
-                <h5 class="card-title">
-                  <%= book.title %>
-                </h5>
-                <p class="card-text">
-                  <%= book.description.substr(0, 100)%>....
-                </p>
-                <h3 class="lead text-danger p-0">Preço: <%= book.price %> €</h3>
-                <hr class="my-2">
-                <a href="/books/view/<%= book._id %> " class="btn btn-primary">Detalhes do Livro</a>
-              </div>
-            </div>
-            <% }) %>
-              
+      <div class="row text-center" style="display:flex; flex-wrap:wrap;">
+        <div class="col-md-6">
+        <% if(books < 1){%>
+          
+        <h3>O livro que procura não se encontra disponivel, tente Novamente</h3>
+        <%}%>
       </div>
+      <br>
+
+      <form action="/books" method="GET" class="form-inline">
+        <i class="form-group"></i>
+        <input type="text" name="search"  placeholder="Nome do Livro">
+        <input type="submit" value="Search" class="btn btn-default">
+      </form>
+
+      <div class="container mb-4 home-books">
+
+        <% books.forEach(book=> { %>
+          <div class="card" style="width: 18rem; position: relative;">
+            <img style="height: 15rem;" src="<%= book.image  %> " class="card-img-top" alt="...">
+            <div class="card-body" style="background-color:#efe3d4">
+              <h5 class="card-title">
+                <%= book.title %>
+              </h5>
+              <p class="card-text">
+                <%= book.description.substr(0, 100)%>....
+              </p>
+              <h3 class="lead text-danger p-0">Preço: <%= book.price %> €</h3>
+              <hr class="my-2">
+              <a href="/books/view/<%= book._id %> " class="btn btn-primary">Detalhes do Livro</a>
+            </div>
+          </div>
+          <% }) %>
+
+      </div>
+
+      
+      
   </div>
   <%- include ('../partials/_footer.ejs') %>
