@@ -1,25 +1,25 @@
 <div class="form-group">
-    <label for="Title">Titulo do Livro</label>
+    <label for="Title">Titulo</label>
     <input required type="text" class="form-control" id="Title" name="title" value="<%= typeof book !== 'undefined' ? book.title : ''%> ">
   </div>
   <div class="form-group">
-    <label for="image"> Capa do Livro Url</label>
+    <label for="image">Capa (URL)</label>
     <input required type="url" class="form-control" id="image" name="image" value="<%= typeof book !== 'undefined' ? book.image : ''%> ">
   </div>
   <div class="form-group">
-      <label for="description">Descrição do Livro</label>
+      <label for="description">Descrição</label>
       <textarea required name="description" class="form-control" id="description" rows="3"><%= typeof book !== 'undefined' ? book.description : ''%></textarea>
     </div>
   <div class="form-group">
-      <label class="form-check-label" for="price">Preço do Livro</label>
+      <label class="form-check-label" for="price">Preço</label>
       <input required type="number" name="price" class="form-control" id="price" value="<%= typeof book !== 'undefined' ? book.price : ''%>">
   </div>
   <div class="form-group">
-    <label class="form-check-label" for="stock">Stock do Livro</label>
+    <label class="form-check-label" for="stock">Stock</label>
     <input required type="number" name="stock" class="form-control" id="stock" value="<%= typeof book !== 'undefined' ? book.stock : ''%>">
 </div>
 <div class="form-group">
-  <label class="form-check-label" for="category">Categorias</label>
+  <label class="form-check-label" for="category">Categoria</label>
   <select class="form-control" id="category" name="category" value="<%= typeof book !== 'undefined' ? book.category : ''%>">
     <% if (typeof book === 'undefined'){ %>
       <option selected disabled hidden>Escolha uma opção</option>
@@ -33,6 +33,7 @@
     </select>
 
 </div>
-  <button type="submit" class="btn btn-success"><%= typeof book === 'undefined' ? 'Criar' : 'Atualizar'%></button>
-  <a href="<%= typeof book === 'undefined' ? '/books' : `/books/view/${book._id}`%>" class="btn btn-success">Voltar Atras</a>
+<div class="text-center">
+  <button type="submit" class="btn btn-main"><%= typeof book === 'undefined' ? 'Criar' : 'Atualizar'%></button>
+</div>
 

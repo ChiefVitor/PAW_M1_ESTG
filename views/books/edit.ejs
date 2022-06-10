@@ -1,21 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja PAW</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<%- include ('../partials/_header.ejs') %>
+    <%- include ('../partials/_msg.ejs') %>
 
-</head>
-<body>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="display-4 text-center">Editar <%= book.title  %> </div>
-        <div class="container">
-            <hr class="my-3">
-            <form method="POST" action="/books/edit/<%= book._id  %>?_method=PUT">
-                <%- include ('./_bookForm.ejs') %> 
-            </form>
-        </div>
-    </div>   
-</body>
-</html>
+        <!-- Navigation Start -->
+        <!-- Header Start -->
+
+        <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/images/logo.png" alt="" class="img-fluid">
+                </a>
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="ti-align-justify"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample09">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  active"><a class="nav-link" href="javascript:history.back()">Voltar</a></li>
+                      </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Close -->
+        
+
+
+        <!-- Navigation ENd -->
+
+        <section class="contact section">
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5 contact-title">
+                            <h2>Editar: <%= book.title  %> </h2>
+                        </div>
+                        <form method="POST" action="/books/new">
+                            <%- include ('./_bookForm.ejs')  %>     
+                           </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include ('../partials/_footer.ejs') %>

@@ -1,168 +1,268 @@
 <%- include ('../partials/_header.ejs') %>
-  <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 lead">
+  <%- include ('../partials/_msg.ejs') %>
 
-      Loja PAW</span>
-    <span>
-      <a href="/books" class="btn btn-sm btn-success">Voltar a Loja</a>
-      <a href="/users/orders" class="btn btn-sm btn-info">Pedidos</a>
-      <a href="/users/logout" class="btn btn-sm btn-warning">Log Out</a>
-    </span>
-  </nav>
-  <div class="container">
-    <div class="jumbotron my-2">
-      <div class="container container-fluid text-center">
-        <h1 class="display-4">Welcome <strong class="capital">
-            <%= user.name %>
-          </strong></h1>
-        <hr class="my-2">
-        <p class="lead">
-          Aqui é a sua Dashboard
-        </p>
-        <h5>
-          <span style="color: rgb(97, 91, 92);">email:</span> <span>
-            <%= user.email %>
-          </span>
-        </h5>
-      </div>
-    </div>
-    <div class="jumbotron p-3">
-      <div class="d-flex justify-content-around" style="font-size: 25px; color: darkblue;">
-        <span>Seu Carrinho <%= user.carts.length===0 ? 'is empty' : '' %></span>
-        <% if(user.carts.length !==0) {%>
-          <button type="button" class="lead btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
-            Checkout
-          </button>
-          <% } %>
-      </div>
-      <div class="container mt-2">
-        <table class="table table-bordered bg-light table-responsive-sm">
-          <thead>
-            <tr>
-              <th scope="col">Capa</th>
-              <th scope="col">Title</th>
-              <th scope="col">Price</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% user.carts.forEach(cartItem=>{ %>
-              <tr>
-                <td><img src="<%= cartItem.book.image  %>" alt="Book Capa" class="img-thumbnail"
-                    style="height: 8rem; width: 8rem;"></td>
-                <td class="lead text-primary">
-                  <%= cartItem.book.title %>
-                </td>
-                <td class="lead text-danger">€<%= cartItem.book.price %>
-                </td>
-                <td>
-                  <form action="/users/cart/<%= cartItem.book._id  %>/delete?_method=DELETE" class="d-inline"
-                    method="POST">
-                    <button type="submit" class="btn btn-sm btn-danger">Remover</button>
-                  </form>
-                </td>
-              </tr>
-              <% }) %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <% if(user.carts.length !==0) {%>
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">Definir Quantidade de livros</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form method="POST" action="/users/checkout">
-              <div class="modal-body">
-                <div class="container mt-2">
-                  <table class="table table-bordered bg-light table-responsive-sm">
-                    <thead>
-                      <tr>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Preço</th>
-                        <th scope="col">Quantidade</th>
-                      </tr>
+    <!-- Navigation Start -->
+    <!-- Header Start -->
 
-                    </thead>
-                    <tbody>
-                      <% user.carts.forEach(cartItem=>{ %>
-                        <tr>
-                          <td class="lead text-primary">
-                            <%= cartItem.book.title %>
-                          </td>
-                          <td class="lead text-danger">
-                            <%= cartItem.book.price %> €
-                          </td>
-                          <td>
-                            <select name="<%= cartItem.book._id %>" class="form-control">
-                              <% if (cartItem.book.stock <= 10) { %>
-                                <option selected>1</option>
-                                <%} else { %>
-                                  <% for(let i=1; i <=10 ; i++){ %>
-                                    <% if(cartItem.quantity===i){ %>
-                                      <option selected>
-                                        <%= i %>
-                                      </option>
-                                      <% }else{ %>
-                                        <option>
-                                          <%= i %>
-                                        </option>
-                                        <% } %>
-                                          <% } %>
-                                            <% } %>
-                            </select>
-                          </td>
-                        </tr>
+    <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="/images/logo.png" alt="" class="img-fluid">
+        </a>
 
-                        <% }) %>
-                    </tbody>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09"
+          aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="ti-align-justify"></span>
+        </button>
 
-                  </table>
-                  <% if (user.points >= 5) { %>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1" value="free" checked>
-                      <label class="form-check-label" for="exampleRadios1">
-                        Expedição Gratis - Usar 5 Pontos
-                      </label>
-                    </div>
-                    <%} else { %>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1" value="free" disabled>
-                        <label class="form-check-label" for="exampleRadios1">
-                          Expedição Gratis - Usar 5 Pontos
-                        </label>
-                      </div>
-                    <% } %>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios2" value="paid">
-                    <label class="form-check-label" for="exampleRadios2">
-                      Expedição Paga - 5€
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios3" value="pickup">
-                    <label class="form-check-label" for="exampleRadios3">
-                      Levantamento em Loja
-                    </label>
-                  </div>
-
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Confirmar Compra</button>
-              </div>
-            </form>
-          </div>
+        <div class="collapse navbar-collapse" id="navbarsExample09">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item  active"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"></li><a href="/users/logout" class="nav-link">Terminar sessão de <%= user.name %></a>
+            </li>
+          </ul>
         </div>
       </div>
-      <% } %>
-  </div>
+    </nav>
 
-  <%- include ('../partials/_footer.ejs') %>
+    <!-- Header Close -->
+
+
+
+    <!-- Navigation ENd -->
+
+    <section class="section banner-2">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10">
+            <h2 class="cd-headline clip is-full-width mb-4">
+              Olá <%= user.name %>, <br>
+                bem-vindo a sua dashboard.
+            </h2>
+            <p class="mb-5">Aqui é possivel gerir o seu carrinho, historico de compras e os seus pontos.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+            <h4>Pontos</h4>
+            <p class="mb-5">Os pontos podem ser usados para adquirir envios gratuitos nas suas compras.</p>
+          </div>
+          <span class="cd-words-wrapper text-color">
+            <%= user.points %>
+          </span><br>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+            <h4>Carrinho</h4>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Capa</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% user.carts.forEach(cartItem=>{ %>
+                <tr>
+                  <td><img src="<%= cartItem.book.image  %>" alt="Book Capa" class="img-thumbnail"
+                      style="height: 8rem; width: 8rem;"></td>
+                  <td class="lead text-primary">
+                    <%= cartItem.book.title %>
+                  </td>
+                  <td class="lead text-danger">€<%= cartItem.book.price %>
+                  </td>
+                  <td>
+                    <form action="/users/cart/<%= cartItem.book._id  %>/delete?_method=DELETE" class="d-inline"
+                      method="POST">
+                      <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Remover</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+          <span>
+            <%= user.carts.length===0 ? 'O carrinho está vazio.' : '' %>
+          </span>
+          <% if(user.carts.length !==0) {%>
+            <button type="button" class="lead btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
+              Prosseguir com a compra <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
+            <% } %>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+            <h4>Historico de Pedidos</h4>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Detalhes</th>
+                <th scope="col">Data</th>
+                <th scope="col">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% orders.forEach(order=>{ %>
+                <tr>
+                  <td>
+                    <%= order._id %>
+                  </td>
+                  <td class="text-danger">
+                    <%= order.amount %> €
+                  </td>
+                  <td>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Titulo</th>
+                          <th scope="col">Preço</th>
+                          <th scope="col">Quantidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% order.details.forEach(cartItem=>{ %>
+                          <tr>
+                            <td>
+                              <%= cartItem.book.title %>
+                            </td>
+                            <td class="text-danger">
+                              <%= cartItem.book.price %> €
+                            </td>
+                            <td>
+                              <%= cartItem.quantity %>
+                            </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </td>
+                  <td>
+                    <%= order.createdAt.toLocaleDateString()  %> <%= order.createdAt.toLocaleTimeString()  %>
+                  </td>
+                  <td>
+                    <% if (order.status === "finished") { %>
+                     Concluida.
+                      <%} else { %>
+                      Pendente.
+                      <% } %>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <% if(user.carts.length !==0) {%>
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Definir Quantidade de livros</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form method="POST" action="/users/checkout">
+                  <div class="modal-body">
+                    <div class="container mt-2">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Titulo</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Quantidade</th>
+                          </tr>
+
+                        </thead>
+                        <tbody>
+                          <% user.carts.forEach(cartItem=>{ %>
+                            <tr>
+                              <td class="lead text-primary">
+                                <%= cartItem.book.title %>
+                              </td>
+                              <td class="lead text-danger">
+                                <%= cartItem.book.price %> €
+                              </td>
+                              <td>
+                                <select name="<%= cartItem.book._id %>" class="form-control">
+                                  <% if (cartItem.book.stock <=10) { %>
+                                    <option selected>1</option>
+                                    <%} else { %>
+                                      <% for(let i=1; i <=10 ; i++){ %>
+                                        <% if(cartItem.quantity===i){ %>
+                                          <option selected>
+                                            <%= i %>
+                                          </option>
+                                          <% }else{ %>
+                                            <option>
+                                              <%= i %>
+                                            </option>
+                                            <% } %>
+                                              <% } %>
+                                                <% } %>
+                                </select>
+                              </td>
+                            </tr>
+
+                            <% }) %>
+                        </tbody>
+
+                      </table>
+                      <% if (user.points>= 5) { %>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1"
+                            value="free" checked>
+                          <label class="form-check-label" for="exampleRadios1">
+                            Expedição Gratis - Usar 5 Pontos
+                          </label>
+                        </div>
+                        <%} else { %>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios1"
+                              value="free" disabled>
+                            <label class="form-check-label" for="exampleRadios1">
+                              Expedição Gratis - Usar 5 Pontos
+                            </label>
+                          </div>
+                          <% } %>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios2"
+                                value="paid">
+                              <label class="form-check-label" for="exampleRadios2">
+                                Expedição Paga - 5€
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="shippingmethod" id="exampleRadios3"
+                                value="pickup">
+                              <label class="form-check-label" for="exampleRadios3">
+                                Levantamento em Loja
+                              </label>
+                            </div>
+
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-main" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> Confirmar Compra</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <% } %>
+      </div>
+    </section>
+
+    <%- include ('../partials/_footer.ejs') %>

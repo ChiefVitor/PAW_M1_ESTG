@@ -1,30 +1,70 @@
-<%- include ('../partials/_header.ejs')  %>
-        <div class="text-center jumbotron jumbotron-fluid p-4">
-            <%- include ('../partials/_msg.ejs')  %> 
-            <div class="container">    
-                <h1 class="display-4">Login</h1>
-                <hr>
-                <p class="lead"> Verifique a sua Conta</p>
-                    
-                    <div class="container">
+<%- include ('../partials/_header.ejs') %>
+    <%- include ('../partials/_msg.ejs') %>
+
+        <!-- Navigation Start -->
+        <!-- Header Start -->
+
+        <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/images/logo.png" alt="" class="img-fluid">
+                </a>
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="ti-align-justify"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample09">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  active"><a class="nav-link" href="/">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Close -->
+        
+
+
+        <!-- Navigation ENd -->
+
+        <section class="contact section">
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5 contact-title">
+                            <h2>Login</h2>
+                        </div>
                         <form action="/users/login" method="POST">
                             <div class="form-group">
-                                <label for="email"><h4>Email address</h4> </label>
-                                <input required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email eg: xyz@abc.com" name="email" value="<%= typeof user == 'undefined' ? '' : newUser.email %>">
+                                <label for="email">
+                                    <h4>E-mail</h4>
+                                </label>
+                                <input required type="email" class="form-control" id="email"
+                                    aria-describedby="emailHelp" placeholder="E-mail" name="email"
+                                    value="<%= typeof user == 'undefined' ? '' : newUser.email %>">
                             </div>
                             <div class="form-group">
-                                <label for="password"><h4>Password</h4> </label>
-                                <input required type="password" class="form-control" id="password" placeholder="Password" name="password" value="<%= typeof newUser == 'undefined' ? '' : user.password %>">
+                                <label for="password">
+                                    <h4>Password</h4>
+                                </label>
+                                <input required type="password" class="form-control" id="password"
+                                    placeholder="Password" name="password"
+                                    value="<%= typeof newUser == 'undefined' ? '' : user.password %>">
                             </div>
-                            <button type="submit" class="btn btn-success" style="min-width: 30%;">Login</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-main">Login</button>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-secondary">Não possui conta? <a href="/users/register">Registe aqui!</a></p>
+                            </div>
                         </form>
-                        <div class="container text-left my-3">
-                            <p class="text-secondary">Não Possui conta <a href="/users/register">Registe Aqui</a></p>
-                        </div>
-                        <div class="container text-left">
-                            <p class="text-secondary"> Voltar a Loja <a href="/books">Clique Aqui</a></p>
-                        </div>
                     </div>
+                </div>
             </div>
-        </div>
-        <%- include ('../partials/_footer.ejs')  %>
+        </section>
+
+        <%- include ('../partials/_footer.ejs') %>

@@ -1,16 +1,15 @@
 <div class="form-group">
-    <label for="Title">Nome</label>
-    <input required type="text" class="form-control" id="Name" name="name" value="<%= user.name  %>">
-  </div>
-  <div class="form-group">
-    <label for="image">E-mail</label>
-    <input required type="text" class="form-control" id="Email" name="email" value="<%= user.email  %>">
-  </div>
- 
-  <div class="form-group">
-    <label class="form-check-label" for="points">Pontos</label>
-    <input required type="text" class="form-control" id="points" name="points" value="<%= user.points  %>">
+  <label for="Title">Nome</label>
+  <input required type="text" class="form-control" id="Name" name="name" value="<%= user.name  %>">
 </div>
-  <button type="submit" class="btn btn-success">Atualizar</button>
-  <a href="/staff" class="btn btn-success">Voltar</a>
-
+<div class="form-group">
+  <label for="image">E-mail</label>
+  <input required type="text" class="form-control" id="Email" name="email" value="<%= user.email  %>">
+</div>
+<div class="form-group">
+  <label class="form-check-label" for="points">Pontos</label>
+  <input required type="text" class="form-control" id="points" name="points" value="<%= user.points  %>">
+</div>
+<div class="text-center">
+  <button type="submit" class="btn btn-main">Atualizar</button>
+</div>

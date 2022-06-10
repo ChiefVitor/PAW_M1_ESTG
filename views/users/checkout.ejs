@@ -1,90 +1,128 @@
 <%- include ('../partials/_header.ejs') %>
-<nav class="navbar navbar-light bg-light">
-	<span class="navbar-brand mb-0 lead">
-		<img
-			src="https://cdn3.iconfinder.com/data/icons/book-shop-category-ouline/512/Book_Shop_Category-10-512.png"
-			alt=""
-			style="height: 2.5em; width: 2.5em"
-			class="img-thumbnail rounded-circle"
-		/>
-		Loja PAW</span
-	>
-	<span>
-		<a href="/users/dashboard" class="btn btn-sm btn-info">Cancelar</a>
-	</span>
-</nav>
+	<%- include ('../partials/_msg.ejs') %>
 
-<div class="container mt-3">
-	<div class="jumbotron p-3">
-		<div class="d-flex justify-content-around" style="font-size: 25px; color: darkblue">
-			<span>Carrinho de Compra</span>
-		</div>
-		<div class="container mt-2">
-			<table class="table table-bordered bg-light table-responsive-sm">
-				<thead>
-					<tr>
-						<th scope="col">Capa</th>
-						<th scope="col">Titulo</th>
-						<th scope="col">Preço</th>
-						<th scope="col">Quantidade</th>
-						<th scope="col">Preço Total </th>
-					</tr>
-				</thead>
-				<tbody>
-					<% user.carts.forEach(cartItem=>{ %>
-					<tr>
-						<td>
-							<img
-								src="<%= cartItem.book.image  %>"
-								alt="Book Capa"
-								class="img-thumbnail"
-								style="height: 8rem; width: 8rem"
-							/>
-						</td>
-						<td><%= cartItem.book.title %></td>
-						<td class="text-danger">€<%= cartItem.book.price %></td>
-						<td><%= cartItem.quantity %></td>
-						<td class="text-danger">€<%= cartItem.quantity * cartItem.book.price %></td>
-					</tr>
-				</tr>
-					<% }) %>
-					<tr class="lead font-weight-bold text-primary">
-						<td colspan="4">Preço de Envio</td>
-						<td colspan="3">€<%= shippingprice %></td>
-					  </tr>
-					<tr class="lead font-weight-bold text-primary">
-						<td colspan="4">Preço Total</td>
-						<td colspan="3">€<%= total %></td>
+		<!-- Navigation Start -->
+		<!-- Header Start -->
 
-					</tr>
-	
-				</tbody>
-				
-			</table>
+		<nav class="navbar navbar-expand-lg  main-nav " id="navbar">
+			<div class="container">
+				<a class="navbar-brand" href="index.html">
+					<img src="/images/logo.png" alt="" class="img-fluid">
+				</a>
 
-		</div>
-		<hr class="my-3" />
-		
-		<!-- BOTÃO PARA IMPLEMENTAR A API DO STRIPE-->
-		<div class="row">
-			<form action="/users/order" method="POST" class="mx-auto">
-				<script
-				src="https://checkout.stripe.com/checkout.js"
-				class="stripe-button"
-				data-key="pk_test_51L707yGlHGAzhcu2TVrH3O4L649XGS5WezjEx7FRDBZQo78KaJ1KolHg8GPGlXsl1Y3XVjWfXXa0GAZANuPFfm6m00Cz92AFlv" 
-				data-name="PAW Loja"
-				data-image="/img/livros.jpg"
-				data-locale="auto">
-			</script>
-			<!-- ESCONDER BOTÃO E ALTERAR PARA OUTRO FORMATO-->
-			<script>
-				document.getElementsByClassName('stripe-button-el')[0]
-				.style.display = 'none';
-			</script>
-			<button type="submit" class="btn btn-primary">Checkout <%= total %> € </button>
-			</form>
-		</div>
-	</div>
-</div>
+				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+					data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="ti-align-justify"></span>
+				</button>
 
-<%- include ('../partials/_footer.ejs') %>
+				<div class="collapse navbar-collapse" id="navbarsExample09">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item  active"><a class="nav-link" href="/">Home</a></li>
+						<li class="nav-item"></li><a href="/users/logout" class="nav-link">Terminar sessão de <%=
+								user.name %></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Header Close -->
+
+
+
+		<!-- Navigation ENd -->
+
+		<section class="section banner-2">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10">
+						<h2 class="cd-headline clip is-full-width mb-4">
+							Finalização da compra<br>
+						</h2>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+						<h4>Artigos neste carrinho</h4>
+					</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Capa</th>
+								<th scope="col">Titulo</th>
+								<th scope="col">Preço</th>
+								<th scope="col">Quantidade</th>
+								<th scope="col">Preço Total </th>
+							</tr>
+						</thead>
+						<tbody>
+							<% user.carts.forEach(cartItem=>{ %>
+								<tr>
+									<td>
+										<img src="<%= cartItem.book.image  %>" alt="Book Capa" class="img-thumbnail"
+											style="height: 8rem; width: 8rem" />
+									</td>
+									<td>
+										<%= cartItem.book.title %>
+									</td>
+									<td class="text-danger">€<%= cartItem.book.price %>
+									</td>
+									<td>
+										<%= cartItem.quantity %>
+									</td>
+									<td class="text-danger">€<%= cartItem.quantity * cartItem.book.price %>
+									</td>
+								</tr>
+								</tr>
+								<% }) %>
+									<tr class="lead font-weight-bold text-primary">
+										<td colspan="4">Preço de Envio</td>
+										<td colspan="3">€<%= shippingprice %>
+										</td>
+									</tr>
+									<tr class="lead font-weight-bold text-primary">
+										<td colspan="4">Preço Total</td>
+										<td colspan="3">€<%= total %>
+										</td>
+
+									</tr>
+
+						</tbody>
+
+					</table>
+
+					
+			</div>
+			<br>
+				<!-- BOTÃO PARA IMPLEMENTAR A API DO STRIPE-->
+				<div class="row">
+					<% if (shippingmethod === 'paid' || shippingmethod === 'free') { %>
+						<form action="/users/order" method="POST" class="mx-auto">
+							<script
+							src="https://checkout.stripe.com/checkout.js"
+							class="stripe-button"
+							data-key="pk_test_51L707yGlHGAzhcu2TVrH3O4L649XGS5WezjEx7FRDBZQo78KaJ1KolHg8GPGlXsl1Y3XVjWfXXa0GAZANuPFfm6m00Cz92AFlv" 
+							data-name="PAW Loja"
+							data-image="/images/books.png"
+							data-locale="auto">
+						</script>
+						<!-- ESCONDER BOTÃO E ALTERAR PARA OUTRO FORMATO-->
+						<script>
+							document.getElementsByClassName('stripe-button-el')[0]
+							.style.display = 'none';
+						</script>
+						<button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> Pagar <%= total %> €</button>
+						</form>
+						<%} else { %>
+							<form action="/users/order" method="POST" class="mx-auto">
+								<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-check" aria-hidden="true"></i> Efetuar pedido</button>
+							</form>
+						<% } %>
+				</div>
+			</div>
+		</section>
+
+		<%- include ('../partials/_footer.ejs') %>

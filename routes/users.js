@@ -6,14 +6,19 @@ const passport = require('passport');
 const VerificarAutenticacao = require('../middleware/VerificarAutenticacao');
 const Book = require('../models/Book');
 const Order = require('../models/Order');
-
+const moment = require('moment');
 // Get Rota Para Registo
 router.get('/register', (req, res) => {
-	res.render('users/register');
+	if (req.isAuthenticated()) {
+		res.redirect('/books');
+	  } else {
+		res.render('users/register');
+	  }
 });
 
 // Post Rota Para Registo de Utilizador
 router.post('/register', async (req, res) => {
+	
 	const foundDuplicate = async (email) => {
 		try {
 			const duplicate = await User.findOne({ email: email });
@@ -81,7 +86,11 @@ router.post('/register', async (req, res) => {
 
 // Rota de Logins de Utilizador
 router.get('/login', (req, res) => {
-	res.render('users/login');
+	if (req.isAuthenticated()) {
+		res.redirect('/books');
+	  } else {
+		res.render('users/login');
+	  }
 });
 
 // Post de Logins de Utilizador
@@ -142,13 +151,21 @@ router.delete('/cart/:id/delete', VerificarAutenticacao, async (req, res) => {
 });
 
 // Dashboard
-router.get('/dashboard', VerificarAutenticacao, (req, res) => {
+router.get('/dashboard', VerificarAutenticacao, async (req, res) => {
+
 	if (req.user.role === 'admin') {
 		res.redirect('/admin');
 	}
 	if (req.user.role === 'staff') {
 		res.redirect('/staff');
 	}
+
+	const orders = await Order.find({ user: req.user })
+		.sort({ createdAt: -1 })
+		.populate('details.book')
+		.exec();
+
+		
 	if (req.user.role === 'customer') {
 		User.findById(req.user.id)
 			.populate('carts.book')
@@ -156,7 +173,7 @@ router.get('/dashboard', VerificarAutenticacao, (req, res) => {
 				if (err) {
 					res.redirect('/books');
 				} else {
-					res.render('users/dashboard', { user: user });
+					res.render('users/dashboard', { user: user, orders: orders });
 				}
 			});
 	}
@@ -225,12 +242,12 @@ router.post('/order', VerificarAutenticacao, async (req, res) => {
 				let shippingprice = 0;
 				let shippingmethod = "";
 				user.carts.forEach((cartItem) => {
-					Book.findOneAndUpdate({_id: cartItem.book.id}, { $inc: { stock: -cartItem.quantity } }, {new: true}, (err, doc) => {
+					Book.findOneAndUpdate({ _id: cartItem.book.id }, { $inc: { stock: -cartItem.quantity } }, { new: true }, (err, doc) => {
 						if (err) {
 							console.log("Erro a remover stock de determinado livro.");
 						}
-					
-						
+
+
 						console.log(doc);
 					});
 					total += cartItem.quantity * cartItem.book.price;
@@ -257,6 +274,7 @@ router.post('/order', VerificarAutenticacao, async (req, res) => {
 				try {
 					const order = new Order({
 						user,
+						createdAt: Date.now(),
 						details: user.carts,
 						amount: total,
 						shippingmethod: shippingmethod,
@@ -269,26 +287,18 @@ router.post('/order', VerificarAutenticacao, async (req, res) => {
 					updatedUser.carts = [];
 					await User.findByIdAndUpdate(updatedUser.id, updatedUser);
 					if (shippingmethod === 'paid') {
-						await User.findByIdAndUpdate(updatedUser.id, { $inc: { points: 5 } });
+						await User.findByIdAndUpdate(updatedUser.id, { $inc: { points: 1 } });
 					}
 					if (shippingmethod === 'free') {
 						await User.findByIdAndUpdate(updatedUser.id, { $inc: { points: -5 } });
 					}
 					req.flash('sucesso', 'O seu pedido foi feito com sucesso.');
-					res.redirect('/users/orders');
+					res.redirect('/users/dashboard');
 				} catch (e) {
 					res.json(e);
 				}
 			}
 		});
-});
-
-router.get('/orders', VerificarAutenticacao, async (req, res) => {
-	const orders = await Order.find({ user: req.user })
-		.sort({ createdAt: -1 })
-		.populate('details.book')
-		.exec();
-	res.render('users/orders', { orders });
 });
 
 module.exports = router;

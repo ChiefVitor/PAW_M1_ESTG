@@ -1,72 +1,111 @@
 <%- include ('../partials/_header.ejs') %>
-  <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 lead">
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css"> 
-      <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-      <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  
+<!-- Navigation Start -->
+<!-- Header Start --> 
 
-      Loja PAW
-    </span>
-    <span>
-      <% if(typeof user==='undefined' ){ %>
-        <a href="/users/login" class="btn btn-sm btn-success">Login</a>
-        <% } else{%>
-          <span class="lead mr-2 capital user-name-home">
-            <%= user.name %>
-          </span>
-          <a href="/users/dashboard" class="btn btn-sm btn-success d-inline">Voltar a Dashboard</a>
-          <% } %>
-            <% if(typeof user !=='undefined' && user.role==='admin' ){ %>
-              <a href="/books/new" class="btn btn-sm btn-primary">Adicionar Novo Livro </a>
-              <% } %>
-                <% if(typeof user !=='undefined' && user.role==='staff' ){ %>
-                  <a href="/books/new" class="btn btn-sm btn-primary">Adicionar Novo Livro </a>
-                  <% } %>
-    </span>
-  </nav>
-  <div class="container">
-    <%- include ('../partials/_msg.ejs') %>
-      <div class="jumbotron text-center my-1">
-        <h1 class="display-4 ml-2">Loja PAW</h1>
-        <p class="lead ml-2">A Sua Loja Online e Fisica Favorita</p>
+<nav class="navbar navbar-expand-lg  main-nav " id="navbar">
+	<div class="container">
+	  <a class="navbar-brand" href="index.html">
+	  	<img src="images/logo.png" alt="" class="img-fluid">
+	  </a>
+
+	  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="ti-align-justify"></span>
+	  </button>
+  
+		  <div class="collapse navbar-collapse" id="navbarsExample09">
+			<ul class="navbar-nav ml-auto">
+			  <li class="nav-item  active"><a class="nav-link" href="/">Home</a></li>
+        <% if(typeof user==='undefined' ){ %>
+          <li class="nav-item"><a href="/users/login" class="nav-link">Login</a></li>
+          <% } else{%>
+            <li class="nav-item"><a href="/users/dashboard" class="nav-link">Dashboard</a></li>
+            <li class="nav-item"></li><a href="/users/logout" class="nav-link">Terminar sessão de <%= user.name %></a></li>
+            <% } %>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<!-- Header Close --> 
+
+
+<!-- Navigation ENd -->
+
+<!-- Banner Start -->
+<section class="section banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-10">
+				 <h2 class="cd-headline clip is-full-width mb-4 ">
+				 	Aqui encontra <br>
+                    <span class="cd-words-wrapper text-color">
+                        <b class="is-visible">Os ultimos lançamentos. </b>
+                        <b>Os melhores autores.</b>
+                        <b>Os melhores preços.</b>
+                    </span>
+                </h2>
+                <p>Biblioteca PAW, a sua livraria online.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Banner End -->
+
+<!-- POrtfolio start -->
+<section class=" portfolio ">
+	<div class="container">
+
+    <form action="/books/search" method="GET">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="search" placeholder="Introduza o nome do livro" style="height:55px">
+        <div class="input-group-append">
+          <button class="btn btn-main" type="submit" style="height:55px"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg></button>
+        </div>
       </div>
-      <div class="row text-center" style="display:flex; flex-wrap:wrap;">
-        <div class="col-md-6">
-        <% if(books < 1){%>
-          
-        <h3>O livro que procura não se encontra disponivel, tente Novamente</h3>
-        <%}%>
-      </div>
-      <br>
+    </form>
 
-      <form action="/books" method="GET" class="form-inline">
-        <i class="form-group"></i>
-        <input type="text" name="search"  placeholder="Nome do Livro">
-        <input type="submit" value="Search" class="btn btn-default">
-      </form>
+	<div class="row mb-5">
+		<div class="col-10">
+			Mostrar por Categorias: 
+			<a name="shuffle-filter" href="/">Todos</a>,
+				<a name="shuffle-filter" href="/books/category?search=Desporto">Desporto</a>,
+				<a name="shuffle-filter" href="/books/category?search=Infantil">Infantil</a>,
+				<a name="shuffle-filter" href="/books/category?search=Drama">Drama</a>,
+				<a name="shuffle-filter" href="/books/category?search=Romance">Romance</a>
+		</div>
+  </div>
 
-      <div class="container mb-4 home-books">
+  <% if (category !== "undefined") { %>
+	<h5>A mostrar livros da categoria: <%= category %></h5>
+	<% } %>
 
-        <% books.forEach(book=> { %>
-          <div class="card" style="width: 18rem; position: relative;">
-            <img style="height: 25rem;" src="<%= book.image  %> " class="card-img-top" alt="...">
-            <div class="card-body" style="background-color:#efe3d4">
-              <h5 class="card-title">
-                <%= book.title %>
-              </h5>
-              <p class="card-text">
-                <%= book.description.substr(0, 100)%>....
-              </p>
-              <h3 class="lead text-danger p-0">Preço: <%= book.price %> €</h3>
-              <hr class="my-2">
-              <a href="/books/view/<%= book._id %> " class="btn btn-primary">Detalhes do Livro</a>
+		<div class="row shuffle-wrapper portfolio-gallery shuffle" style="position: relative; overflow: hidden; height: 862.484px; transition: height 250ms cubic-bezier(0.4, 0, 0.2, 1) 0s;">
+      <% books.forEach(book=> { %>		  
+        <div class="col-lg-4 col-6 mb-4 shuffle-item shuffle-item--visible" data-groups="[&quot;branding&quot;]" style="position: absolute; top: 0px; left: 0px; visibility: visible; will-change: transform; opacity: 1; transform: translate(0px, 0px) scale(1); transition-duration: 250ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-property: transform, opacity;">
+          <div class="position-relative inner-box">
+              <div class="image position-relative ">
+                 <img src="<%= book.image  %> " alt="portfolio-image"  width="351" height="525">
+                  <div class="overlay-box">
+                    <div class="overlay-inner">
+                      <a class="overlay-content" href="/books/view/<%= book._id %> ">
+                        <h5 class="mb-0"><%= book.title %></h5>
+                        <p><%= book.description.substr(0, 100)%>....</p>
+                      </a>
+                    </div> 
+                </div>
             </div>
           </div>
-          <% }) %>
+        </div> 
+      <% }) %>
 
-      </div>
+	    </div>
+	</div>
+</section>
+<!-- Portfolio End -->
 
-      
-      
-  </div>
+
   <%- include ('../partials/_footer.ejs') %>

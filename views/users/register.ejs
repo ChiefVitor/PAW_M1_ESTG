@@ -1,39 +1,66 @@
-<%- include ('../partials/_header.ejs')  %>
-        <div class="text-center jumbotron jumbotron-fluid p-2 mb-0">
-            <%- include ('../partials/_msg.ejs')  %> 
+<%- include ('../partials/_header.ejs') %>
+    <%- include ('../partials/_msg.ejs') %>
+
+        <!-- Navigation Start -->
+        <!-- Header Start -->
+
+        <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
             <div class="container">
-                <h1 class="display-4">Registar</h1>
-                <hr>
-                <p class="lead"> Crie a sua Conta</p>
-                    <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/images/logo.png" alt="" class="img-fluid">
+                </a>
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="ti-align-justify"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample09">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  active"><a class="nav-link" href="/">Home</a></li>
+                        <li class="nav-item  active"><a class="nav-link" href="/users/login">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Close -->
+
+
+        <!-- Navigation ENd -->
+
+        <section class="contact section">
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5 contact-title">
+                            <h2>Registo</h2>
+                        </div>
                         <form action="/users/register" method="POST">
                             <div class="form-group">
                                 <label for="name"><h4>Nome</h4> </label>
-                                <input required type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Enter Your name" name="name" value="<%= typeof newUser == 'undefined' ? '' : newUser.name %>">
-                                <small id="nameHelp" class="form-text text-muted">Nome deve apenas conter letras do alfabeto</small>
+                                <input required type="text" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Nome" name="name" value="<%= typeof newUser == 'undefined' ? '' : newUser.name %>">
+                                <small id="nameHelp" class="form-text text-muted">Nome deve apenas conter letras do alfabeto.</small>
                             </div>
                             <div class="form-group">
-                                <label for="email"><h4>Email </h4> </label>
-                                <input required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email eg: xyz@abc.com" name="email" value="<%= typeof newUser == 'undefined' ? '' : newUser.email %>">
-                                <small id="emailHelp" class="form-text text-muted">Nunca Partilhe o seu email.</small>
+                                <label for="email"><h4>E-mail </h4> </label>
+                                <input required type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="E-mail" name="email" value="<%= typeof newUser == 'undefined' ? '' : newUser.email %>">
+                                <small id="emailHelp" class="form-text text-muted">Não lhe enviaremos spam.</small>
                             </div>
                             <div class="form-group">
                                 <label for="password"><h4>Password</h4> </label>
                                 <input required type="password" class="form-control" id="password" placeholder="Password" name="password" value="<%= typeof newUser == 'undefined' ? '' : newUser.password %>">
-                                <small id="emailHelp" class="form-text text-muted">Password deve conter no minimo 6 carateres</small>
+                                <small id="emailHelp" class="form-text text-muted">Password deve conter no minimo 6 carateres.</small>
                             </div>
-                            <button type="submit" class="btn btn-success" style="min-width: 30%;">Registar</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-main">Criar conta!</button>
+                            </div>
                         </form>
-                        <div class="container text-left my-3">
-                            <p class="text-secondary">Já possui conta <a href="/users/login">Login Aqui</a></p>
-                        </div>
-                        <div class="container text-left">
-                            <p class="text-secondary"> Voltar a Loja <a href="/books">Clique Aqui</a></p>
-                        </div>
-
                     </div>
+                </div>
             </div>
+        </section>
 
-
-        </div>
-        <%- include ('../partials/_footer.ejs')  %>
+        <%- include ('../partials/_footer.ejs') %>

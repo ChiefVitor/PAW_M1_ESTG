@@ -8,22 +8,31 @@ const VerificarAutorizacao = require('../middleware/VerificarAutorizacao');
 const { application, json } = require('express');
 
 router.get('/', cors(), async (req, res) => {
-      
-    if (req.query.search) {
+
+        const books = await Book.find({});
+        res.render('books/home', { books: books, user: req.user, category: "undefined"});
+    }
+
+);
+
+router.get('/search', cors(), async (req, res) => {
+
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
 
         const books = await Book.find({ title: regex });
-        res.render('books/home', { books: books, user: req.user });
+        res.render('books/home', { books: books, user: req.user, category: "undefined" });
 
 
+});
 
+router.get('/category', cors(), async (req, res) => {
 
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
 
+    const books = await Book.find({ category: regex });
 
-    } else {
-        const books = await Book.find({});
-        res.render('books/home', { books: books, user: req.user});
-    }
+    res.render('books/home', { books: books, user: req.user, category: req.query.search });
+    
 
 });
 
