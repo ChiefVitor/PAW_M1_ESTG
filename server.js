@@ -6,8 +6,11 @@ const session = require('cookie-session');
 const passport = require('passport');
 const connectDB = require('./config/db');
 const flash = require('connect-flash');
-const stripe = require('stripe')('sk_test_51L707yGlHGAzhcu2JxsZ1U4aJa3PIwXOIu2L528auGEje0n4gTboYzDNIrAXH3abgJfHYYUyvUtsnNmPc7TV64T100DrfEPMF9')
-
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./swagger.json');
+const stripe = require('stripe')('sk_test_51L707yGlHGAzhcu2JxsZ1U4aJa3PIwXOIu2L528auGEje0n4gTboYzDNIrAXH3abgJfHYYUyvUtsnNmPc7TV64T100DrfEPMF9');
+var routerBooks = require('./routes/books');
+var cors = require('cors');
 connectDB(process.env.MONGO_URI);
 require('./config/passport')(passport);
 
@@ -48,4 +51,9 @@ const IP = process.env.IP;
 app.listen(PORT, IP, () => {
 	console.log(`Listening in: ${IP}:${PORT}`);
 });
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
+app.use('127.0.0.1:3000',routerBooks);
+app.use(cors({
+    origin: '*'
+}));
 

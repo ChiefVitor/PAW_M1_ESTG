@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/Book');
-
+var cors = require('cors')
 
 // const VerificarAutenticacao = require('../middleware/VerificarAutenticacao');
 const VerificarAutorizacao = require('../middleware/VerificarAutorizacao');
-const { application } = require('express');
+const { application, json } = require('express');
 
-router.get('/', async (req, res) => {
-
+router.get('/', cors(), async (req, res) => {
+      
     if (req.query.search) {
         const regex = new RegExp(escapeRegex(req.query.search), 'gi');
 

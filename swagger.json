@@ -1,0 +1,37 @@
+{
+    "swagger":"2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Book store API",
+        "description": "Rest API for Book Store"
+    },
+    "host": "127.0.0.1:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "book store",
+            "description": "API for Book Store"
+        }
+    ],
+    "schemes": ["http"],
+    "consumes":["application/json"],
+    "produces":["application/json"],
+    "paths": {
+        "/books":{
+            "get": {
+                "tags": ["Books"],
+                "summary": "Receive data",
+                "produces":["application/json"],
+                "responses": {
+                    "200":{
+                        "description": "Found",
+                        "schema":{
+                            
+                        }
+                      
+                    }
+                }
+            }
+        }
+    }
+}

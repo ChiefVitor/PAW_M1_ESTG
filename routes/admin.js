@@ -5,6 +5,7 @@ const User = require('../models/User');
 const Book = require('../models/Book');
 const Order = require('../models/Order');
 
+
 router.get('/', VerificarAutorizacao, async (req, res) => {
     const books = await Book.find();
     const users = await User.find();
