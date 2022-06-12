@@ -60,24 +60,16 @@
 								<p><%= book.price %> €</p>
 							</div>
 
-							<div class="mt-4">
-                                <% if(typeof user !== 'undefined' && user.role === 'admin' || typeof user !== 'undefined' && user.role === 'staff'){ %> 
-                                    <a href="/books/edit/<%= book._id %>" class="btn btn-primary">Editar</a><p></p>
-                                    <form action="/books/delete/<%= book._id  %>?_method=DELETE" class="d-inline" method="POST">
-                                        <button type="submit" class="btn btn-danger">Eliminar Livro</button>
-                                    </form>
-                                <% }else if(typeof user === 'undefined' || typeof user !== 'undefined' && user.carts.findIndex(item=> item.book.equals(book._id))===-1 )  { %> 
-                                  <% if(book.stock > 0 ){ %>
-                                    <form action="/users/cart/<%= book._id  %>?_method=PUT" class="d-inline" method="POST">
-                                    <button type="submit" class="btn btn-warning"><i class="fa fa-cart-plus" aria-hidden="true"></i> Adicionar ao Carrinho</button>
-                                    <% }else{ %>
-                                        <h4 class="lead text-danger">Stock Indisponivel</h4>
-                                        <% } %>
-                                </form>
-                            <% }else{ %>
-                                <p class="lead text-secondary"><p>Livro no carrinho </p><a href="/users/dashboard" class="btn btn-primary d-inline">Ir para carrinho</a></p>
-                            <% } %> 
+							<div class="info">
+								<h5 class="mb-0">Ano</h5>
+								<p><%= book.year %></p>
 							</div>
+
+							<div class="info">
+								<h5>ISBN</h5>
+								<p><%= book.isbn %></p>
+							</div>
+
 						</div>
 
 						<div class="col-lg-6">
@@ -85,8 +77,31 @@
 								<h5 class="mb-0">Categoria</h5>
 								<p><%= book.category %></p>
 							</div>
-
+							<div class="info">
+								<h5>Autor</h5>
+								<p><%= book.writer %></p>
+							</div>
 						</div>
+
+						<div class="info">
+							<% if(typeof user !== 'undefined' && user.role === 'admin' || typeof user !== 'undefined' && user.role === 'staff'){ %> 
+								<a href="/books/edit/<%= book._id %>" class="btn btn-primary">Editar</a><p></p>
+								<form action="/books/delete/<%= book._id  %>?_method=DELETE" class="d-inline" method="POST">
+									<button type="submit" class="btn btn-danger">Eliminar Livro</button>
+								</form>
+							<% }else if(typeof user === 'undefined' || typeof user !== 'undefined' && user.carts.findIndex(item=> item.book.equals(book._id))===-1 )  { %> 
+							  <% if(book.stock > 0 ){ %>
+								<form action="/users/cart/<%= book._id  %>?_method=PUT" class="d-inline" method="POST">
+								<button type="submit" class="btn btn-warning"><i class="fa fa-cart-plus" aria-hidden="true"></i> Adicionar ao Carrinho</button>
+								<% }else{ %>
+									<h4 class="lead text-danger">Stock Indisponivel</h4>
+									<% } %>
+							</form>
+						<% }else{ %>
+							<p class="lead text-secondary"><p>Livro no carrinho </p><a href="/users/dashboard" class="btn btn-primary d-inline">Ir para carrinho</a></p>
+						<% } %> 
+						</div>
+
 					</div>
 				</div>
 			</div>
