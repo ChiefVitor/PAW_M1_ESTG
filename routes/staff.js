@@ -4,13 +4,15 @@ const VerificarAutorizacao = require('../middleware/VerificarAutorizacao');
 const User = require('../models/User');
 const Book = require('../models/Book');
 const Order = require('../models/Order');
+const Used = require('../models/Used');
 
 router.get('/', VerificarAutorizacao, async (req, res) => {
     const books = await Book.find();
     const users = await User.find();
     const orders = await Order.find().sort({ createdAt: -1 }).populate("user").populate("details.book").exec();
+    const used = await Used.find().sort({ createdAt: -1 }).populate("user");
     //console.log(orders);
-    res.render('staff/dashboard', { staff: req.user, books, users, orders });
+    res.render('staff/dashboard', { staff: req.user, books, users, orders, used });
 });
 
 
@@ -50,6 +52,36 @@ router.delete('/delete/order/:id', VerificarAutorizacao, async (req, res) => {
 router.post('/changestatus/order/:id', VerificarAutorizacao, async (req, res) => {
     await Order.findByIdAndUpdate(req.params.id, { status: "finished" });
     res.redirect('/admin');
+});
+
+router.post('/used/:id/accept', VerificarAutorizacao, async (req, res) => {
+
+    let usedBook = await Used.findById(req.params.id).exec()
+
+    await Used.findByIdAndUpdate(usedBook.id, { status: "Accepted" });
+
+    await User.findByIdAndUpdate(usedBook.user, { $inc: { points: usedBook.price } });
+
+    res.redirect('/staff');
+});
+
+router.post('/used/:id/reject', VerificarAutorizacao, async (req, res) => {
+
+    let usedBook = await Used.findById(req.params.id).exec()
+
+    await Used.findByIdAndUpdate(usedBook.id, { status: "Rejected" });
+
+    res.redirect('/staff');
+});
+
+router.delete('/used/:id/delete', async (req, res) => {
+
+	let usedBook = await Used.findById(req.params.id).exec()
+    
+    await Used.findByIdAndDelete(usedBook.id);
+
+    res.redirect('/staff');
+
 });
 
 module.exports = router;

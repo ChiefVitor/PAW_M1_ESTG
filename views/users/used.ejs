@@ -1,0 +1,69 @@
+<%- include ('../partials/_header.ejs') %>
+    <%- include ('../partials/_msg.ejs') %>
+
+        <!-- Navigation Start -->
+        <!-- Header Start -->
+
+        <nav class="navbar navbar-expand-lg  main-nav " id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="/images/logo.png" alt="" class="img-fluid">
+                </a>
+
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="ti-align-justify"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarsExample09">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item  active"><a class="nav-link" href="javascript:history.back()">Voltar</a></li>
+                      </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header Close -->
+        
+
+
+        <!-- Navigation ENd -->
+
+        <section class="contact section">
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5 contact-title">
+                            <h2>Vender um livro</h2>
+                        </div>
+                        <form method="POST" action="/users/used/add">
+                            <div class="form-group">
+                                <label for="Title">Titulo</label>
+                                <input required type="text" class="form-control" id="title" name="title" value="">
+                              </div>
+                            
+                              <div class="form-group">
+                                <label for="Title">ISBN</label>
+                                <input required type="text" class="form-control" id="isbn" name="isbn" value="">
+                              </div>
+                            
+                              <div class="form-group">
+                                  <label class="form-check-label" for="price">Preço (€)</label>
+                                  <input required type="number" name="price" class="form-control" id="price" value="">
+                                  <small id="priceHelp" class="form-text text-muted">O valor irá ser pago em pontos.</small>
+                              </div>
+
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-main">Propor</button>
+                            </div>
+                            
+                                 
+                           </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include ('../partials/_footer.ejs') %>

@@ -150,6 +150,78 @@
 
                 <div class="row">
                     <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+                        <h4>Vendas a loja</h4>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Titulo</th>
+                                <th scope="col">ISBN</th>
+                                <th scope="col">Preço</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Utilizador</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% used.forEach(used=>{ %>
+                                <tr>
+                                    <td>
+                                        <%= used._id %>
+                                    </td>
+                                    <td>
+                                        <%= used.title %>
+                                    </td>
+                                    <td>
+                                        <%= used.isbn %>
+                                    </td>
+                                    <td class="text-danger">
+                                        <%= used.price %> €
+                                    </td>
+                                    <td>
+                                        <%= used.createdAt.toLocaleDateString() %>
+                                            <%= used.createdAt.toLocaleTimeString() %>
+                                    </td>
+                                    <td><%= used.user.name %></td>
+                                    <td>
+                                        <% if (used.status==="pending" ) { %>
+                                            Pendente
+                                            <% } %>
+                                                <% if (used.status==="Accepted" ) { %>
+                                                    Aceite
+                                                    <% } %>
+                                                        <% if (used.status==="Rejected" ) { %>
+                                                            Rejeitada
+                                                            <% } %>
+                                    </td>
+                                    <td>
+                                        <% if (used.status==="pending" ) { %>
+                                            <form action="/staff/used/<%= used._id  %>/accept" class="d-inline"
+                                                method="POST">
+                                                <button type="submit" class="btn btn-sm btn-success"><i
+                                                        class="fa fa-check" aria-hidden="true"></i> Aceitar</button>
+                                                <form action="/staff/used/<%= used._id  %>/reject" class="d-inline"
+                                                    method="POST">
+                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                            class="fa fa-times" aria-hidden="true"></i> Recusar</button>
+                                                </form>
+                                                <%} else { %>
+                                                    <form action="/staff/used/<%= used._id  %>/delete?_method=DELETE" class="d-inline"
+                                                        method="POST">
+                                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"
+                                                            aria-hidden="true"></i> Remover</button>
+                                                    <% } %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
                         <h4>Gestão das compras</h4>
                     </div>
                     <table class="table table-bordered table-sm">
@@ -214,16 +286,34 @@
                                             </span>
                                     </td>
                                     <td>
-                                        <%= order.type %>
+                                        <% if (order.type==="store" ) { %>
+                                            Loja
+                                            <% } %>
+                                            <% if (order.type==="online" ) { %>
+                                                Online
+                                                <% } %>
                                     </td>
                                     <td>
-                                        <%= order.shippingmethod %>
+                                        <% if (order.shippingmethod==="free" ) { %>
+                                            Gratis
+                                            <% } %>
+                                            <% if (order.shippingmethod==="paid" ) { %>
+                                                Pago
+                                                <% } %>
+                                                <% if (order.shippingmethod==="pickup" ) { %>
+                                                    Levantamento
+                                                    <% } %>
                                     </td>
                                     <td style="font-size: 70%;">
                                         <%= order.shippingprice %>
                                     </td>
                                     <td>
-                                        <%= order.status %>
+                                        <% if (order.status==="pending" ) { %>
+                                            Pendente
+                                            <% } %>
+                                            <% if (order.status==="finished" ) { %>
+                                                Concluido
+                                                <% } %>
                                     </td>
                                     <td>
                                         <% if (order.status==="pending" ) { %>

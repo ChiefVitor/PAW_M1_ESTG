@@ -7,18 +7,21 @@ const VerificarAutenticacao = require('../middleware/VerificarAutenticacao');
 const Book = require('../models/Book');
 const Order = require('../models/Order');
 const moment = require('moment');
+const Used = require('../models/Used');
+
+
 // Get Rota Para Registo
 router.get('/register', (req, res) => {
 	if (req.isAuthenticated()) {
 		res.redirect('/books');
-	  } else {
+	} else {
 		res.render('users/register');
-	  }
+	}
 });
 
 // Post Rota Para Registo de Utilizador
 router.post('/register', async (req, res) => {
-	
+
 	const foundDuplicate = async (email) => {
 		try {
 			const duplicate = await User.findOne({ email: email });
@@ -88,9 +91,9 @@ router.post('/register', async (req, res) => {
 router.get('/login', (req, res) => {
 	if (req.isAuthenticated()) {
 		res.redirect('/books');
-	  } else {
+	} else {
 		res.render('users/login');
-	  }
+	}
 });
 
 // Post de Logins de Utilizador
@@ -165,7 +168,10 @@ router.get('/dashboard', VerificarAutenticacao, async (req, res) => {
 		.populate('details.book')
 		.exec();
 
-		
+		const used = await Used.find({ user: req.user })
+		.sort({ createdAt: -1 })
+		.exec();
+
 	if (req.user.role === 'customer') {
 		User.findById(req.user.id)
 			.populate('carts.book')
@@ -173,7 +179,7 @@ router.get('/dashboard', VerificarAutenticacao, async (req, res) => {
 				if (err) {
 					res.redirect('/books');
 				} else {
-					res.render('users/dashboard', { user: user, orders: orders });
+					res.render('users/dashboard', { user: user, orders: orders, used: used });
 				}
 			});
 	}
@@ -299,6 +305,47 @@ router.post('/order', VerificarAutenticacao, async (req, res) => {
 				}
 			}
 		});
+});
+
+router.get('/used/add', (req, res) => {
+	res.render('users/used');
+});
+
+router.post('/used/add', async (req, res) => {
+
+	const user = await User.findById(req.user.id);
+
+	const used = {
+		user,
+		title: req.body.title,
+		isbn: req.body.isbn,
+		price: req.body.price,
+		createdAt: Date.now(),
+		status: "pending"
+	};
+	try {
+		const newUsed = new Used(used);
+		await newUsed.save();
+		res.redirect(`/users/dashboard`);
+	} catch (e) {
+		console.log(e);
+		res.redirect(`/users/dashboard`);
+	}
+});
+
+router.delete('/used/:id/delete', async (req, res) => {
+
+	let usedBook = await Used.findById(req.params.id).exec()
+
+	try {
+		if (usedBook.status === "pending"){
+			await Used.findByIdAndDelete(usedBook.id);
+			res.redirect('/users/dashboard');
+		}
+	} catch (e) {
+		console.log(e);
+		res.redirect('/users/dashboard');
+	}
 });
 
 module.exports = router;

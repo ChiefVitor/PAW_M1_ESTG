@@ -162,6 +162,78 @@
           </table>
         </div>
 
+
+        <div class="row">
+          <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+              <h4>Vendas a loja</h4>
+          </div>
+      </div>
+      <div>
+          <div class="text-right">
+              <a href="/users/used/add" class="btn btn-success"><i class="fa fa-book" aria-hidden="true"></i>
+                  Vender livro</a>
+          </div>
+      </div>
+      <br>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Data</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acções</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% used.forEach(used=>{ %>
+                <tr>
+                  <td>
+                    <%= used._id %>
+                  </td>
+                 <td>
+                    <%= used.title %>
+                  </td>
+                  <td>
+                    <%= used.isbn %>
+                  </td>
+                  <td class="text-danger">
+                    <%= used.price %> €
+                  </td>
+                  <td>
+                    <%= used.createdAt.toLocaleDateString()  %> <%= used.createdAt.toLocaleTimeString()  %>
+                  </td>
+                  <td>
+                    <% if (used.status==="pending" ) { %>
+                      Pendente
+                      <% } %>
+                          <% if (used.status==="Accepted" ) { %>
+                              Aceite
+                              <% } %>
+                                  <% if (used.status==="Rejected" ) { %>
+                                      Rejeitada
+                                      <% } %>
+                  </td>
+                  <td>
+                    <% if (used.status === "pending") { %>
+                      <form action="/users/used/<%= used._id  %>/delete?_method=DELETE" class="d-inline"
+                        method="POST">
+                        <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"
+                            aria-hidden="true"></i> Cancelar</button>
+                    </form>
+                      <%} else { %>
+                      <p></p>
+                      <% } %>
+                  </td>
+                </tr>
+                <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+
         <% if(user.carts.length !==0) {%>
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
