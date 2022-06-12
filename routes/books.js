@@ -9,18 +9,18 @@ const { application, json } = require('express');
 
 router.get('/', cors(), async (req, res) => {
 
-        const books = await Book.find({});
-        res.render('books/home', { books: books, user: req.user, category: "undefined"});
-    }
+    const books = await Book.find({});
+    res.render('books/home', { books: books, user: req.user, category: "undefined" });
+}
 
 );
 
 router.get('/search', cors(), async (req, res) => {
 
-        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
 
-        const books = await Book.find({ title: regex });
-        res.render('books/home', { books: books, user: req.user, category: "undefined" });
+    const books = await Book.find({ title: regex });
+    res.render('books/home', { books: books, user: req.user, category: "undefined" });
 
 
 });
@@ -32,7 +32,7 @@ router.get('/category', cors(), async (req, res) => {
     const books = await Book.find({ category: regex });
 
     res.render('books/home', { books: books, user: req.user, category: req.query.search });
-    
+
 
 });
 
@@ -56,11 +56,14 @@ router.get('/new', VerificarAutorizacao, (req, res) => {
 router.post('/new', VerificarAutorizacao, async (req, res) => {
     const book = {
         title: req.body.title,
+        isbn: req.body.isbn,
+        writer: req.body.writer,
+        year: req.body.year,
         image: req.body.image,
         description: req.body.description,
         price: parseFloat(req.body.price),
         stock: req.body.stock,
-        category: req.body.category,
+        category: req.body.category
     };
     try {
         const newBook = new Book(book);
@@ -79,6 +82,9 @@ router.get('/edit/:id', VerificarAutorizacao, async (req, res) => {
 router.put('/edit/:id', VerificarAutorizacao, async (req, res) => {
     const book = {
         title: req.body.title,
+        isbn: req.body.isbn,
+        writer: req.body.writer,
+        year: req.body.year,
         image: req.body.image,
         description: req.body.description,
         price: parseFloat(req.body.price),

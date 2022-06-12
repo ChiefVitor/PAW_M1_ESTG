@@ -4,6 +4,22 @@ const bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
+    isbn: {
+        type:String,
+        required: true
+    },
+
+    writer:{
+        type: String,
+        required:true
+    },
+
+    year:{
+        type:Number,
+        required:true
+
+    },
     image: {
         type: String,
         required: true
@@ -17,16 +33,17 @@ const bookSchema = new mongoose.Schema({
         required: true
     },
 
-    stock:{
+    stock: {
         type: Number,
-        required:true
-    },
-    category:{
-        type:String,
-        required:true
+        required: true
     },
 
-    comments:[
+    category: {
+        type: String,
+        required: true
+    },
+
+    comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"

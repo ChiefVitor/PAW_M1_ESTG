@@ -38,7 +38,7 @@
                         <div class="text-center mb-5 contact-title">
                             <h2>Editar: <%= book.title  %> </h2>
                         </div>
-                        <form method="POST" action="/books/new">
+                        <form method="POST" action="/books/edit/<%= book._id  %>?_method=PUT">
                             <%- include ('./_bookForm.ejs')  %>     
                            </form>
                     </div>
