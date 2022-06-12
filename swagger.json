@@ -6,7 +6,7 @@
         "description": "Rest API for Book Store"
     },
     "host": "127.0.0.1:3000",
-    "basePath": "/",
+    "basePath": "/api/v1",
     "tags": [
         {
             "name": "book store",
@@ -17,7 +17,7 @@
     "consumes":["application/json"],
     "produces":["application/json"],
     "paths": {
-        "/books":{
+        "/":{
             "get": {
                 "tags": ["Books"],
                 "summary": "Receive data",
@@ -32,6 +32,111 @@
                     }
                 }
             }
+        },
+        "/view/{id}":{
+            "get": {
+                "tags": ["Obter livro"],
+                "description": "Obtem o livro com o id associado",
+                "produces":["application/json"],
+                "parameters": [
+                    {"in": "path",
+                    "name": "id",
+                    "required": true
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Livro com o id passado no path"
+
+                    },
+                    "404":{
+                        "description": "Livro não existe"
+                    }
+                }
+            }
+
+    },
+    "/orders/{user}":{
+        "get": {
+            "tags": ["Compras user"],
+            "description": "Obtem as compras efetuadas por um user",
+            "produces":["application/json"],
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "user",
+                    "required": true
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Cliente existe"
+                },
+                "404":{
+                    "description": "Not found"
+                }
+            }
+        }
+    },
+    "/editarbook/{id}":{
+        "post":{
+            "tags":["Editar livro"],
+            "description": "Permite editar livro",
+            "produces":["application/json"],
+            "consumes":["application/x-www-form-urlencoded"],
+            "schemes": ["http"
+            ],
+            "parameters": [
+                {
+                    "schema": {
+                        "$ref": "#/definitions/book"
+                    }
+                }
+            ],
+            "responses": {
+                "200":{
+                    "description": "Livro editado"
+                }
+            }
         }
     }
+    
+    
+  
+
+},
+"definitions": {
+    "book":{
+        "type":"object",
+        "required": [
+            "title",
+            "image",
+            "description",
+            "price",
+            "stock",
+            "category"
+        ],
+    "properties": {
+    "title": {
+        "type": "string"
+    },
+    "image": {
+        "type": "string"
+    },
+    "description": {
+        "type": "string"
+    },
+    "price": {
+        "type": "number"
+    },
+
+    "stock":{
+        "type": "number"
+    },
+    "category":{
+        "type":"string"
+    }
+}
+    }
+}
 }

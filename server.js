@@ -59,9 +59,9 @@ const IP = process.env.IP;
 app.listen(PORT, IP, () => {
 	console.log(`Listening in: ${IP}:${PORT}`);
 });
+app.use(express.json());
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
-app.use('127.0.0.1:3000',routerBooks);
+app.use('/api/v1',require('./routes/api'));
 app.use(cors({
     origin: '*'
 }));
-
